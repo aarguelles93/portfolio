@@ -1,0 +1,22 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "A porfolio integrated to a twitter account",
+  "main": "index.js",
+  "scripts": {
+    "debug": "SET SLS_DEBUG=* && node --inspect node_modules\\serverless\\bin\\serverless offline -s dev",
+    "lint": "npx eslint ."
+  },
+  "author": "Andrés Argüelles",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "serverless-http": "^2.7.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "prettier": "^2.3.2",
+    "serverless": "^2.56.0",
+    "serverless-offline": "^8.0.0"
+  }
+}
