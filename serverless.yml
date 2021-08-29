@@ -30,14 +30,21 @@ functions:
     handler: index.handler
     events:
       - http:
-          path: /helloworld
+          path: API/helloworld
           method: get
   
+  getPortfolio:
+    handler: controllers/portfolio.getPortfolio
+    events:
+      - http:
+          path: API/portfolio/{userId}
+          method: get    
+
   createPortfolio:
     handler: controllers/portfolio.createPortfolio
     events:
       - http:
-          path: /portfolio
+          path: API/portfolio
           method: post
 
 resources:
