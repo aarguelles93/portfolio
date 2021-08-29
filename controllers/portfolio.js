@@ -1,13 +1,6 @@
-const AWS = require('aws-sdk');
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
-
 const yup = require('yup');
-const got = require('got');
 
-const PortfolioTable = process.env.PORTFOLIO_TABLE_NAME;
-const TwitterApiRootUrl = process.env.TWITTER_API_URL;
-const TwitterBearerToken = process.env.TWITTER_BEARER_TOKEN;
-
+const PortfolioModel = require('../models/portfolio');
 const portfolioSchema = yup.object({
   userId: yup.string().required(),
   description: yup.string().required(),
@@ -40,50 +33,31 @@ module.exports.createPortfolio = async (event, context) => {
     console.error(err);
     return {
       statusCode: 402,
-      body: JSON.stringify(err.message),
+      body: JSON.stringify({ message: err.message }),
     };
   }
 
-  const {
-    userId,
-    description,
-    imageUrl,
-    twitterUserName,
-    title,
-    experience,
-    lastName,
-    name,
-    twitterUserId,
-  } = data;
-
-  const params = {
-    TableName: PortfolioTable,
-    Item: {
-      userId,
-      description,
-      imageUrl,
-      twitterUserName,
-      title,
-      experience,
-      lastName,
-      name,
-      twitterUserId,
-    },
-  };
-
+  let porfolio;
   try {
-    await dynamoDb.put(params).promise();
-    return {
-      statusCode: 200,
-      body: JSON.stringify(params.Item),
-    };
+    porfolio = await PortfolioModel.setPorfolio(data);
   } catch (err) {
-    console.log(err);
+    if (err.statusCode) {
+      return {
+        statusCode: err.statusCode,
+        body: JSON.stringify({ message: err.name }),
+      };
+    }
+    console.error(err);
     return {
       statusCode: 500,
-      body: JSON.stringify(`Could not create Portfolio - ${err.message}`),
+      body: JSON.stringify({ message: err.message }),
     };
   }
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify(porfolio),
+  };
 };
 
 module.exports.getPortfolio = async (event, context) => {
@@ -96,64 +70,27 @@ module.exports.getPortfolio = async (event, context) => {
     console.error(err);
     return {
       statusCode: 402,
-      body: JSON.stringify(err.message),
+      body: JSON.stringify({ message: err.message }),
     };
   }
 
   const { userId } = data.pathParameters;
 
-  const params = {
-    TableName: PortfolioTable,
-    Key: {
-      userId,
-    },
-  };
-
-  let result;
+  let portfolio;
   try {
-    result = await dynamoDb.get(params).promise();
-    if (!result.Item) {
+    portfolio = await PortfolioModel.getPortfolio(userId);
+  } catch (err) {
+    if (err.statusCode) {
       return {
-        statusCode: 404,
-        body: JSON.stringify({
-          message: `No porfolio was found for user ${userId}`,
-        }),
+        statusCode: err.statusCode,
+        body: JSON.stringify({ message: err.name }),
       };
     }
-  } catch (err) {
-    console.log(err);
+    console.error(err);
     return {
       statusCode: 500,
-      body: JSON.stringify({
-        message: `Could not get Portfolio - ${err.message}`,
-      }),
+      body: JSON.stringify({ message: err.message }),
     };
-  }
-
-  const portfolio = result.Item;
-
-  // Tries to get userTweets. If no tweets are found, field is returned as null.
-  if (portfolio.twitterUserName) {
-    const getTweetsUrl = `${TwitterApiRootUrl}/statuses/user_timeline.json`;
-    /* eslint-disable camelcase */
-    try {
-      const tweets = await got.get(getTweetsUrl, {
-        responseType: 'json',
-        headers: {
-          Authorization: `Bearer ${TwitterBearerToken}`,
-        },
-        searchParams: {
-          screen_name: portfolio.twitterUserName,
-          count: 5,
-          exclude_replies: true,
-        },
-      });
-
-      portfolio.tweets = tweets.body;
-    } catch (err) {
-      console.error(err.message);
-      portfolio.tweets = null;
-    }
   }
 
   return {
