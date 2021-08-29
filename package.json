@@ -11,10 +11,12 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "serverless-http": "^2.7.0"
+    "serverless-http": "^2.7.0",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
+    "eslint-plugin-prettier": "^3.4.1",
     "prettier": "^2.3.2",
     "serverless": "^2.56.0",
     "serverless-offline": "^8.0.0"
