@@ -13,6 +13,8 @@ provider:
   environment:
     STAGE: ${self:custom.env.STAGE}
     PORTFOLIO_TABLE_NAME: ${self:custom.env.PORTFOLIO_TABLE_NAME}
+    TWITTER_API_URL: ${self:custom.env.TWITTER_API_URL}
+    TWITTER_BEARER_TOKEN: ${self:custom.env.TWITTER_BEARER_TOKEN}
   iamRoleStatements:
     - Effect: Allow
       Action:
