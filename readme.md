@@ -10,6 +10,8 @@ To deploy it, it is required to have installed both the aws-cli and serverless m
 
 In case you are running the project in your local machine using the serverless-offline plugin, you can manually create the required db table. The script 'setupDb.js' can be run from the machine; otherwise, it can be manually created through the AWS Console. Anyway, it is important that the name of the table later matches with the .env 'PORTFOLIO_TABLE_NAME'.
 
+Also, for the Twitter integration to work, the .env 'TWITTER_BEARER_TOKEN' must be configured.
+
 ## Environment variables
 The required .env's must be setup into the correspondent file:
 - `config.dev.json`
@@ -22,7 +24,7 @@ Also, inside the file, the 'STAGE' .env must be set up accordingly
   "STAGE": "dev",
   "PORTFOLIO_TABLE_NAME": "portfolio",
   "TWITTER_API_URL": "https://api.twitter.com/1.1",
-  "TWITTER_BEARER_TOKEN": "AAAAAAAAAAAAAAAAAAAAAPNkCAEAAAAAmcfv%2BXE59uvAZ6pzjUv%2Fu68sBHI%3DpujwAAAwLsqbNQivymaOn0NveuOmKcRItDb5TUpn8fXY3iUMs6"
+  "TWITTER_BEARER_TOKEN": "..."
 }
 ```
 
@@ -46,30 +48,30 @@ Take into account that all of the endpoints are deployed inside of the correspon
 ## API
 Currently, there are two endpoints to interact with the API:
 
-- ### `GET /STAGE/API/portfolio/:userId`
-    - #### Params:
-        - :userId : It is the userId of any of the existing Portfolios
-    - #### Response:
-    ```json
-    {
-      "imageUrl": "https://pbs.twimg.com/profile_images/668279339838935040/8sUE9d4C_200x200.jpg",
-      "twitterUserName": "GoT_Tyrion",
-      "lastName": "Lannister",
-      "userId": "tlanister",
-      "description": "Tyrion of House Lannister. Imp, Halfman. Never forget what you are, for surely the world will not. Not",
-      "name": "Tyrion",
-      "title": "Tyrion Lannister",
-      "tweets": [...]
-    }
-    ```
-    Tweets are returned if `twitterUserName` is a valid twitter account. It may return up to 5 of its latest tweets.
+  - ### `GET /STAGE/API/portfolio/:userId`
+      - #### Params:
+          - :userId : It is the userId of any of the existing Portfolios
+      - #### Response:
+      ```json
+      {
+        "imageUrl": "https://pbs.twimg.com/profile_images/668279339838935040/8sUE9d4C_200x200.jpg",
+        "twitterUserName": "GoT_Tyrion",
+        "lastName": "Lannister",
+        "userId": "tlanister",
+        "description": "Tyrion of House Lannister. Imp, Halfman. Never forget what you are, for surely the world will not. Not",
+        "name": "Tyrion",
+        "title": "Tyrion Lannister",
+        "tweets": [...]
+      }
+      ```
+      Tweets are returned if `twitterUserName` is a valid twitter account. It may return up to 5 of its latest tweets.
 
-    In case of errors, the following structure is returned:
-    ```json
-    {
-      "message": "No porfolio was found for user 123"
-    }
-    ```
+      In case of errors, the following structure is returned:
+      ```json
+      {
+        "message": "No porfolio was found for user 123"
+      }
+      ```
 
   - ### `POST /STAGE/API/portfolio/`
       - #### Body:
@@ -104,3 +106,7 @@ Currently, there are two endpoints to interact with the API:
         "message": "userId is a required field"
       }
       ```
+      
+## WebApp
+- ### `GET /STAGE/:userId`
+Access the information of the given user. In case that the given ':userdId' does not exist, the client gets redirected.
