@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-3">
+    <img src="<%= imageUrl %>" class="card-img-top" alt="profile image">
+    <hr />
+    <h2><%= name %>'s timeline </h2>
+    <% tweets.forEach((tweet) => { %>
+      <div class="card">
+        
+        <div class="row card-body">                
+          <div class="col-sm-3">
+            <img class="img-thumbnail" src="<%= tweet.user.profile_image_url_https || imageUrl  %>" alt="profile image">
+          </div>
+          <div class="col-sm-9">
+            <h5 class="card-title"> <%= tweet.user.name %>  </h5>
+            <p class="card-text"><%= tweet.text %></p>                  
+            <p class="card-text"><small class="text-muted"><%= tweet.created_at %></small></p>
+            <% if (tweet.urls && tweet.urls.lenght > 0) { %> 
+            <a href="<%= tweet.entities.urls[0].url %>" class="card-link">Go to tweet</a>
+            <% } %> 
+          </div>                
+        </div>
+      </div>
+    <% }) %> 
+    <a class="p-1 nav-link active" href="https://twitter.com/<%= twitterUserName %> ">Go to profile</a>
+   
+  </div>
+  <div class="col bg-light">
+    <h1><%= name + ' ' + lastName %> </h1>
+    <p><%= description  %> </p>
+  </div>
+</div>

@@ -10,7 +10,10 @@
   "author": "Andrés Argüelles",
   "license": "ISC",
   "dependencies": {
+    "aws-lambda": "^1.0.6",
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.1",
     "got": "^11.8.2",
     "serverless-http": "^2.7.0",
     "yup": "^0.32.9"
