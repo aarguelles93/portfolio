@@ -3,6 +3,8 @@ const router = express.Router();
 
 const PortfolioModel = require('../models/portfolio');
 
+const Stage = process.env.STAGE;
+
 router.get('/helloworld', async (req, res) => {
   await res.send('Hello world!');
 });
@@ -19,7 +21,7 @@ router.get('/:userId', async (req, res) => {
   try {
     portfolio = await PortfolioModel.getPortfolio(userId);
   } catch (error) {
-    res.redirect('http://google.com');
+    res.redirect(`/${Stage}/`);
     return;
   }
 
