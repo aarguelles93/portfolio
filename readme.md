@@ -17,14 +17,15 @@ The required .env's must be setup into the correspondent file:
 
 Also, inside the file, the 'STAGE' .env must be set up accordingly
 
-`
+```json
 {
   "STAGE": "dev",
   "PORTFOLIO_TABLE_NAME": "portfolio",
   "TWITTER_API_URL": "https://api.twitter.com/1.1",
   "TWITTER_BEARER_TOKEN": "AAAAAAAAAAAAAAAAAAAAAPNkCAEAAAAAmcfv%2BXE59uvAZ6pzjUv%2Fu68sBHI%3DpujwAAAwLsqbNQivymaOn0NveuOmKcRItDb5TUpn8fXY3iUMs6"
 }
-`
+```
+
 ## Deployment
 Once all the previous steps are done, the project can be deployed using the serverless CLI by entering:
 
