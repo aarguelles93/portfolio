@@ -5,10 +5,6 @@ const PortfolioModel = require('../models/portfolio');
 
 const Stage = process.env.STAGE;
 
-router.get('/helloworld', async (req, res) => {
-  await res.send('Hello world!');
-});
-
 router.get('/', async (req, res) => {
   res.render('index');
 });

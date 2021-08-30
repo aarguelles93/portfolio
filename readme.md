@@ -110,3 +110,5 @@ Currently, there are two endpoints to interact with the API:
 ## WebApp
 - ### `GET /STAGE/:userId`
 Access the information of the given user. In case that the given ':userdId' does not exist, the client gets redirected.
+- ### `GET /STAGE/`
+An improvised homepage for the application. Currently used to redirect failed requests.
