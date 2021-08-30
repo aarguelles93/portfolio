@@ -6,7 +6,7 @@ const portfolioSchema = yup.object({
   description: yup.string().required(),
   imageUrl: yup.string(),
   twitterUserName: yup.string(),
-  title: yup.string(),
+  title: yup.string().required(),
   experience: yup.string(),
   lastName: yup.string().required(),
   name: yup.string().required(),

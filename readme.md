@@ -86,7 +86,7 @@ Currently, there are two endpoints to interact with the API:
         "name": "Tyrion",
       }
       ```
-      Mandatory fields: userId, description, lastName, name.
+      Mandatory fields: userId, description, lastName, name, title
 
       - #### Response:
       ```json
