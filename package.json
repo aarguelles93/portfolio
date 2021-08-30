@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "debug": "SET SLS_DEBUG=* && node --inspect node_modules\\serverless\\bin\\serverless offline -s dev",
-    "lint": "npx eslint ."
+    "lint": "npx eslint .",
+    "setupdb": "node setupDb.js"
   },
   "author": "Andrés Argüelles",
   "license": "ISC",
